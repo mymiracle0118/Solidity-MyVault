@@ -15,7 +15,7 @@ contract FundManager is AccessControl, ReentrancyGuard {
 
     function withdrawEth(address _to, uint256 _amount) public nonReentrant onlyRole(DEFAULT_ADMIN_ROLE) {
         address payable to = payable(_to);
-        console.log("contract balance", address(this).balance);
+        // console.log("contract balance", address(this).balance);
         require(_amount <= address(this).balance, "Insufficient funds");
         to.transfer(_amount);
     }
