@@ -22,7 +22,7 @@ bsctest = "${BSCTEST_RPC_URL}"
 polygonpos = { key = "${POLYGONSCAN_API_KEY}", url = "https://api.polygonscan.com/api" }
 mumbai = { key = "${POLYGONSCAN_API_KEY}", url = "https://api-testnet.polygonscan.com/api" }
 sepolia = { key = "${ETHERSCAN_API_KEY}" }
-ethereum = { key = "${ETHERSCAN_API_KEY}" }
+ethereum = { key = "${ETHERSCAN_API_KEY}", chain = 1 }
 bsc = { key = "${BSCSCAN_API_KEY}", url = "https://api.bscscan.com/api" }
 bsctest = { key = "${BSCSCAN_API_KEY}", url = "https://api-testnet.bscscan.com/api" }
 gnosis = { key = "${GNOSIS_ETHERSCAN_API_KEY}", url = "https://blockscout.com/poa/xdai/api" }
