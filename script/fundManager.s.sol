@@ -10,9 +10,15 @@ contract FundManagerScript is Script {
     function setUp() public {}
 
     function run() public {
-        vm.startBroadcast();
 
-        fundManager = new FundManager();
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        address owner = vm.envAddress("CONTRACT_OWNER");
+
+        vm.startBroadcast(deployerPrivateKey);
+
+        fundManager = new FundManager(owner);
+
+        console.log("deployed FundManager Address", address(fundManager));
 
         vm.stopBroadcast();
     }
