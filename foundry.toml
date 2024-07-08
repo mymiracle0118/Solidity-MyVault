@@ -11,18 +11,20 @@ out = "out"
 libs = ["lib", "node_modules"]
 
 [rpc_endpoints]
-polygon = "${POLYGON_RPC_URL}"
+polygonpos = "${POLYGON_RPC_URL}"
 mumbai = "${MUMBAI_RPC_URL}"
 sepolia = "${SEPOLIA_RPC_URL}"
 ethereum = "${MAINNET_RPC_URL}"
 bsc = "${BSC_RPC_URL}"
+bsctest = "${BSCTEST_RPC_URL}"
 
 [etherscan]
-polygon = { key = "${POLYGON_API_KEY}", url = "https://api.polygonscan.com/api" }
-mumbai = { key = "${MUMBAISCAN_API_KEY}", url = "https://api-testnet.polygonscan.com/api" }
+polygonpos = { key = "${POLYGONSCAN_API_KEY}", url = "https://api.polygonscan.com/api" }
+mumbai = { key = "${POLYGONSCAN_API_KEY}", url = "https://api-testnet.polygonscan.com/api" }
 sepolia = { key = "${ETHERSCAN_API_KEY}" }
 ethereum = { key = "${ETHERSCAN_API_KEY}" }
 bsc = { key = "${BSCSCAN_API_KEY}", url = "https://api.bscscan.com/api" }
+bsctest = { key = "${BSCSCAN_API_KEY}", url = "https://api-testnet.bscscan.com/api" }
 gnosis = { key = "${GNOSIS_ETHERSCAN_API_KEY}", url = "https://blockscout.com/poa/xdai/api" }
 
 [profile.default.fuzz]
