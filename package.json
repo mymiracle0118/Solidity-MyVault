@@ -17,6 +17,10 @@
     "deployToPolygonPos": "forge script script/fundManager.s.sol:FundManagerScript --broadcast --verify src/fundManager.sol:FundManager --rpc-url polygonpos --etherscan-api-key polygonpos -vv",
     "deployToBSC": "forge script script/fundManager.s.sol:FundManagerScript --broadcast --verify src/fundManager.sol:FundManager --rpc-url bsc --etherscan-api-key bsc -vv",
     "deployToBSCTest": "forge script script/fundManager.s.sol:FundManagerScript --broadcast --verify src/fundManager.sol:FundManager --rpc-url bsctest --etherscan-api-key bsc -vv",
+    "sourcifyVerifyEth": "forge verify-contract 0x8d59bca8183D6a75A1db4a5803c763fBbE08c6aB FundManager --chain-id 1 --verifier sourcify --verifier-url https://sourcify.dev/server",
+    "sourcifyVerifyPolygon": "forge verify-contract 0x8d59bca8183D6a75A1db4a5803c763fBbE08c6aB FundManager --chain-id 137 --verifier sourcify --verifier-url https://sourcify.dev/server",
+    "sourcifyVerifyBSC": "forge verify-contract 0x8d59bca8183D6a75A1db4a5803c763fBbE08c6aB FundManager --chain-id 56 --verifier sourcify --verifier-url https://sourcify.dev/server",
+    "verifyEth": "forge verify-contract 0x8d59bca8183D6a75A1db4a5803c763fBbE08c6aB FundManager --watch",
     "git": "git add . && git commit -m 'Test' && git push --all"
   },
   "devDependencies": {
