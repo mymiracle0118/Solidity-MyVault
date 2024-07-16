@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
+import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
+// import "openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Utils.sol";
 import "../src/fundManager.sol";
-import "openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Proxy.sol";
-import "openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Utils.sol";
 import "forge-std/Script.sol";
 
 contract FundManagerScript is Script {
