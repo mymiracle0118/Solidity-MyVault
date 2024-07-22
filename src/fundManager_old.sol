@@ -8,7 +8,7 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 import { console } from "forge-std/Test.sol";
 
-contract FundManager is AccessControl, ReentrancyGuard {
+contract FundManagerOld is AccessControl, ReentrancyGuard {
     constructor(address defaultAdmin) {
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
     }

@@ -8,9 +8,9 @@ import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 // import "openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import { SafeERC20 } from "openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
 
-// import { console } from "forge-std/Test.sol";
+import { console } from "forge-std/Test.sol";
 
-contract FundManager is Initializable, AccessControlUpgradeable {
+contract FundManagerUpgrade is Initializable, AccessControlUpgradeable {
 
     using SafeERC20 for IERC20;
     // bytes4 private constant SELECTOR = bytes4(keccak256(bytes('transfer(address,uint256)')));
@@ -39,11 +39,10 @@ contract FundManager is Initializable, AccessControlUpgradeable {
         IERC20(_token).safeDecreaseAllowance(_to, _amount);
     }
 
-    function withdrawEth(address _to, uint256 _amount) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        console.log("withdrawEth function");
+    function withdrawEther(address _to, uint256 _amount) public {
         // address payable to = payable(_to);
         // console.log("contract balance", address(this).balance);
-        // // require(_amount <= address(this).balance, "Insufficient funds");
+        // require(_amount <= address(this).balance, "Insufficient funds");
         // to.transfer(_amount);
     }
 
