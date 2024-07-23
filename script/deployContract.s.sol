@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
+// import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 // import "openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Utils.sol";
 import "../src/fundManager.sol";
+import "../src/Proxy/EIP173Proxy.sol";
 import "forge-std/Script.sol";
 
 contract FundManagerScript is Script {
@@ -31,7 +32,7 @@ contract FundManagerScript is Script {
         );
 
         // Deploy the proxy contract with the implementation address and initializer
-        ERC1967Proxy proxy = new ERC1967Proxy(_implementation, data);
+        EIP173Proxy proxy = new EIP173Proxy(_implementation, owner, data);
 
         vm.stopBroadcast();
         // Log the proxy address
