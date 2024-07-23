@@ -40,11 +40,10 @@ contract FundManager is Initializable, AccessControlUpgradeable {
     }
 
     function withdrawEth(address _to, uint256 _amount) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        console.log("withdrawEth function");
-        // address payable to = payable(_to);
+        address payable to = payable(_to);
         // console.log("contract balance", address(this).balance);
-        // // require(_amount <= address(this).balance, "Insufficient funds");
-        // to.transfer(_amount);
+        require(_amount <= address(this).balance, "Insufficient funds");
+        to.transfer(_amount);
     }
 
     function withdrawToken(address _token, address _to, uint256 _amount) public onlyRole(DEFAULT_ADMIN_ROLE) {

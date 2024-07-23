@@ -39,11 +39,11 @@ contract FundManagerUpgrade is Initializable, AccessControlUpgradeable {
         IERC20(_token).safeDecreaseAllowance(_to, _amount);
     }
 
-    function withdrawEther(address _to, uint256 _amount) public {
-        // address payable to = payable(_to);
+    function withdrawEther(address _to, uint256 _amount) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        address payable to = payable(_to);
         // console.log("contract balance", address(this).balance);
-        // require(_amount <= address(this).balance, "Insufficient funds");
-        // to.transfer(_amount);
+        require(_amount <= address(this).balance, "Insufficient funds");
+        to.transfer(_amount);
     }
 
     function withdrawToken(address _token, address _to, uint256 _amount) public onlyRole(DEFAULT_ADMIN_ROLE) {

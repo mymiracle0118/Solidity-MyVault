@@ -10,20 +10,25 @@ import {FundManagerUpgrade} from "../src/fundManagerUpgrade.sol";
 import {EIP173Proxy} from "../src/Proxy/EIP173Proxy.sol";
 import {IFundManager} from "../src/IFundManager.sol";
 // import { Upgrades } from "openzeppelin-foundry-upgrades/Upgrades.sol";
-
 import "src/fundManager.sol";
 
-contract FundManagerTest is Test {
+interface IProxy {
+    function upgradeTo(address newImplementation) external;
+}
+
+contract FundManagerRealTest is Test {
     uint256 chainFork;
 
     address payable admin = payable(address(0x3EAEd08FF5b1829afC5945B1643707713dA54ac6));
     address payable alice = payable(address(0x5f56eEBF7b6cC82750d41aC85376c9b2491e2F2e));
     address payable bob = payable(address(7));
 
-    FundManager public fundManager;
+    IProxy public proxy;
+
     FundManagerUpgrade public fundManagerUpgrade;
-    
+   
     IERC20 token = IERC20(address(0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359)); // Polygon Mainnet;
+    address payable public _implementation;
 
     function setUp() public {
         // chainFork = vm.createFork(vm.envString("MAINNET_RPC_URL"));
@@ -32,6 +37,9 @@ contract FundManagerTest is Test {
         vm.selectFork(chainFork);
         assertEq(vm.activeFork(), chainFork);
         vm.rollFork(59680276);
+
+        proxy = IProxy(0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359);
+        _implementation = payable(address(0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359));
     }
 
     function testWithdrawEth() public {
@@ -40,18 +48,7 @@ contract FundManagerTest is Test {
         bytes memory returnData;
 
         vm.deal(admin, 10 ether);
-
-        vm.startPrank(admin);
-        fundManager = new FundManager();  
-        address payable _implementation = payable(address(fundManager)); // Replace with your token address
-        bytes memory data = abi.encodeWithSelector(
-            FundManager(_implementation).initialize.selector,
-            admin, // Initial owner/admin of the contract
-            admin
-        );
-        EIP173Proxy proxy = new EIP173Proxy(_implementation, admin, data);
-        vm.stopPrank();
-        
+      
         vm.prank(admin);
         payable(payable(address(proxy))).transfer(5 ether);
         assertGe(address(proxy).balance, 5 ether, "havent transferred");
@@ -75,21 +72,6 @@ contract FundManagerTest is Test {
         uint256 decimalMultiplier = 10 ** IERC20Metadata(address(token)).decimals();       
 
         vm.deal(admin, 10 ether);
-
-        vm.startPrank(admin);
-
-        fundManager = new FundManager();
-
-        address payable _implementation = payable(address(fundManager)); // Replace with your token address
-
-        bytes memory data = abi.encodeWithSelector(
-            FundManager(_implementation).initialize.selector,
-            admin, // Initial owner/admin of the contract
-            admin
-        );
-
-        EIP173Proxy proxy = new EIP173Proxy(_implementation, admin, data);
-        vm.stopPrank();
 
         deal(address(token), admin, 5000 * decimalMultiplier);
         // deal(token, to, give, false);
@@ -125,18 +107,6 @@ contract FundManagerTest is Test {
 
         vm.deal(admin, 10 ether);
 
-        vm.startPrank(admin);
-        fundManager = new FundManager();
-
-        address payable _implementation = payable(address(fundManager)); // Replace with your token address
-        bytes memory data = abi.encodeWithSelector(
-            FundManager(_implementation).initialize.selector,
-            admin, // Initial owner/admin of the contract
-            admin
-        );
-        EIP173Proxy proxy = new EIP173Proxy(_implementation, admin, data);
-        vm.stopPrank();
-
         vm.prank(admin);
         payable(payable(address(proxy))).transfer(5 ether);
         
@@ -146,11 +116,6 @@ contract FundManagerTest is Test {
         vm.stopPrank();
 
         assertGe(address(proxy).balance, 5 ether, "havent transferred");
-
-        // vm.startPrank(alice);
-        // vm.expectRevert();
-        // (success, returnData) = address(proxy).call(abi.encodeWithSelector(FundManagerUpgrade(_implementation).withdrawEth.selector, alice, 1 ether));
-        // vm.stopPrank();
 
         vm.startPrank(alice);
         vm.expectRevert("Unauthorized");
