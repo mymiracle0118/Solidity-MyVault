@@ -27,19 +27,19 @@ contract FundManagerRealTest is Test {
 
     FundManagerUpgrade public fundManagerUpgrade;
    
-    IERC20 token = IERC20(address(0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359)); // Polygon Mainnet;
+    IERC20 token = IERC20(address(0xdAC17F958D2ee523a2206206994597C13D831ec7)); // Polygon Mainnet;
     address payable public _implementation;
 
     function setUp() public {
-        // chainFork = vm.createFork(vm.envString("MAINNET_RPC_URL"));
+        chainFork = vm.createFork(vm.envString("MAINNET_RPC_URL"));
         // chainFork = vm.createFork(vm.envString("BSC_RPC_URL"));
-        chainFork = vm.createFork(vm.envString("POLYGON_RPC_URL"));
+        // chainFork = vm.createFork(vm.envString("POLYGON_RPC_URL"));
         vm.selectFork(chainFork);
         assertEq(vm.activeFork(), chainFork);
-        vm.rollFork(59680276);
+        vm.rollFork(20394506);
 
-        proxy = IProxy(0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359);
-        _implementation = payable(address(0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359));
+        proxy = IProxy(0x7bE1992A648bf4B8F7DbD85cb3E734d8e8863C40);
+        _implementation = payable(address(0xaCc5Ebba190D84466319C4c05AccCE10f60FeABf));
     }
 
     function testWithdrawEth() public {
@@ -78,7 +78,8 @@ contract FundManagerRealTest is Test {
         assertEq(token.balanceOf(address(admin)), 5000 * decimalMultiplier, "deal token failed");
         
         vm.startPrank(admin);
-        token.transfer(address(proxy), 1000 * decimalMultiplier);
+        (success, returnData) = address(token).call(abi.encodeWithSelector(IERC20.transfer.selector, address(proxy), 1000 * decimalMultiplier));
+        // token.transfer(address(proxy), 1000 * decimalMultiplier);
         vm.stopPrank();
 
         assertEq(token.balanceOf(address(proxy)), 1000 * decimalMultiplier, "transfer to fundManger failed");
